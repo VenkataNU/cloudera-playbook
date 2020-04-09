@@ -1,0 +1,48 @@
+[scm_server]
+ccycloud-11.vuansiblecdh.root.hwx.site
+
+[db_server]
+ccycloud-1.vuansiblecdh.root.hwx.site
+
+[krb5_server]
+ccycloud-2.vuansiblecdh.root.hwx.site
+
+[utility_servers:children]
+scm_server
+db_server
+krb5_server
+
+[gateway_servers]
+ccycloud-3.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Gateway
+
+[edge_servers]
+ccycloud-4.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Edge    role_ref_names=HDFS-HTTPFS-1
+
+[master_servers]
+ccycloud-6.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Master1
+ccycloud-7.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Master2
+ccycloud-8.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Master3
+
+[worker_servers]
+ccycloud-3.vuansiblecdh.root.hwx.site
+ccycloud-4.vuansiblecdh.root.hwx.site
+ccycloud-5.vuansiblecdh.root.hwx.site
+
+[worker_servers:vars]
+host_template=HostTemplate-Workers
+
+[cdh_servers:children]
+utility_servers
+gateway_servers
+master_servers
+worker_servers
+nifi_servers
+nifi_registry_servers
+
+[nifi_servers]
+ccycloud-9.vuansiblecdh.root.hwx.site        host_template=HostTemplate-Nifi
+
+[nifi_registry_servers]
+ccycloud-10.vuansiblecdh.root.hwx.site        host_template=HostTemplate-NifiRegistry
+
+[all:vars]
